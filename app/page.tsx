@@ -1,4 +1,6 @@
 'use client'
+// (keep 'use client' here if you have it)
+import EmailSignup from '@/components/EmailSignup'
 
 import { useEffect } from 'react'
 
@@ -133,6 +135,8 @@ export default function Home() {
           <p><a className="secondary-btn" href="/story">Read the full story</a></p>
         </div>
       </section>
+{/* Email signup */}
+<EmailSignup />
 
       {/* FOOTER */}
       <footer>
