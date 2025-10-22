@@ -1,51 +1,27 @@
-'use client'
-// (keep 'use client' here if you have it)
-import EmailSignup from '@/components/EmailSignup'
+'use client';
 
-import { useEffect } from 'react'
+import { useEffect } from 'react';
+
+// UI bits
+import AnnouncementBar from '@components/AnnouncementBar';
+import Footer from '@components/Footer';
+import EmailSignup from '@components/EmailSignup';
 
 export default function Home() {
+  // Smooth scrolling for on-page anchor links
   useEffect(() => {
-    // Smooth scrolling for in-page anchors
-    document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        const href = a.getAttribute('href') || ''
-        if (!href.startsWith('#')) return
-        e.preventDefault()
-        const target = document.querySelector(href)
-        if (target) target.scrollIntoView({ behavior: 'smooth' })
-      })
-    })
-
-    // Fade-in on scroll
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add('visible')
-      })
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' })
-    document.querySelectorAll('.fade-in').forEach(el => io.observe(el))
-    return () => io.disconnect()
-  }, [])
-
-  // Parallax / micro motion on hero can
-  useEffect(() => {
-    const img = document.getElementById('hero-can') as HTMLImageElement | null
-    if (!img) return
-    const onMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 8
-      const y = (e.clientY / window.innerHeight - 0.5) * 8
-      img.style.transform = `translate(${x}px, ${y}px) rotate(${x * 0.2}deg)`
-    }
-    const onLeave = () => {
-      img.style.transform = `translate(0,0) rotate(0deg)`
-    }
-    window.addEventListener('mousemove', onMove)
-    window.addEventListener('mouseleave', onLeave)
-    return () => {
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseleave', onLeave)
-    }
-  }, [])
+    document
+      .querySelectorAll<HTMLAnchorElement>('a[href^="#"]')
+      .forEach((a) => {
+        a.addEventListener('click', (e) => {
+          const href = a.getAttribute('href') || '';
+          if (!href.startsWith('#')) return;
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+  }, []);
 
   return (
     <main>
@@ -54,14 +30,18 @@ export default function Home() {
         <div className="nav-container">
           <div className="logo">KAMAL</div>
           <ul className="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/story">Our Story</a></li>
-            <li><a href="/shop">Shop</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Benefits</a></li>
+            <li><a href="#product">Product</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
           <a href="/shop" className="cta-button">Shop Now</a>
         </div>
       </nav>
+
+      {/* Subtle announcement (dismissible) */}
+      <AnnouncementBar />
 
       {/* HERO */}
       <section className="hero" id="home">
@@ -70,21 +50,22 @@ export default function Home() {
             <div className="hero-tagline">AUTHENTIC • SMOOTH • ELEVATED</div>
             <h1>Vietnamese Iced Coffee, Reimagined</h1>
             <p className="hero-description">
-              The bold, nostalgic flavor of cà phê sữa đá — reimagined with oat milk
-              and naturally sweetened with allulose. Smooth, modern, and beautifully simple.
+              Experience the rich, bold taste of traditional Vietnamese coffee with a modern twist.
+              Made with oat milk condensed milk and naturally sweetened with allulose.
             </p>
             <div className="hero-buttons">
               <a className="primary-btn" href="/shop">Order Now</a>
               <a className="secondary-btn" href="/story">Learn More</a>
             </div>
           </div>
-          <div className="hero-image">
+          <div className="hero-image floating-can tilt-can">
+            {/* Swap this image for your real can when ready */}
             <img
-              id="hero-can"
+              src="/images/og.png"
               width={400}
               height={600}
-              src={"/images/kamal%20coffee%20simple%20image%20first%20sketch%20front%20of%20can.jpeg"}
-              alt="Kamal Coffee can"
+              alt="Kamal Coffee — Vietnamese Iced Coffee"
+              style={{ width: 400, height: 'auto' }}
             />
           </div>
         </div>
@@ -97,59 +78,108 @@ export default function Home() {
           <div className="feature-card fade-in">
             <div className="feature-icon">🌱</div>
             <h3>Plant-Based Bliss</h3>
-            <p>Our condensed milk is crafted with premium oat milk—creamy, dairy-free, and kind to your body.</p>
+            <p>
+              Our condensed milk is crafted with premium oat milk — creamy richness without dairy.
+              Perfect for a plant-based lifestyle.
+            </p>
           </div>
           <div className="feature-card fade-in">
             <div className="feature-icon">🍃</div>
             <h3>Naturally Sweetened</h3>
-            <p>Allulose delivers sweetness without the sugar crash. Bold flavor, guilt-free indulgence.</p>
+            <p>
+              Sweetened with allulose for clean sweetness without the crash. Guilt-free indulgence.
+            </p>
           </div>
           <div className="feature-card fade-in">
             <div className="feature-icon">☕</div>
             <h3>Authentic Taste</h3>
-            <p>Made with Vietnamese robusta beans—true to tradition, elevated for today.</p>
+            <p>
+              Made with premium Vietnamese robusta beans, honoring tradition with modern craft.
+            </p>
+          </div>
+          <div className="feature-card fade-in">
+            <div className="feature-icon">⚡</div>
+            <h3>Ready to Enjoy</h3>
+            <p>No brewing. Grab, shake, and enjoy anywhere.</p>
+          </div>
+          <div className="feature-card fade-in">
+            <div className="feature-icon">💪</div>
+            <h3>Better Energy</h3>
+            <p>Bold coffee for steady focus without the jitters.</p>
+          </div>
+          <div className="feature-card fade-in">
+            <div className="feature-icon">🌍</div>
+            <h3>Sustainably Sourced</h3>
+            <p>We work directly with Vietnamese farmers for quality and fairness.</p>
           </div>
         </div>
       </section>
 
-      {/* FOLLOW US */}
-      <section className="follow">
-        <div className="follow-container">
-          <h2 className="section-title">Follow Us</h2>
-          <p className="follow-sub">New drops, behind-the-scenes, and more.</p>
-          <div className="social-row">
-            <a className="social-pill" href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram</a>
-            <a className="social-pill" href="https://www.tiktok.com/" target="_blank" rel="noreferrer">TikTok</a>
-            <a className="social-pill" href="https://www.youtube.com/" target="_blank" rel="noreferrer">YouTube</a>
+      {/* PRODUCT */}
+      <section className="product" id="product">
+        <div className="product-container">
+          <div className="product-images">
+            <img src="/images/og.png" alt="Kamal Original" />
+            <img src="/images/og.png" alt="Kamal Original" />
+          </div>
+          <div className="product-info">
+            <h2>The Perfect Vietnamese Coffee Experience</h2>
+            <p>
+              Kamal brings you authentic Vietnamese iced coffee in a convenient, ready-to-drink
+              format. The perfect balance of bold coffee and creamy, clean sweetness.
+            </p>
+            <p>
+              Tradition meets nutrition: nostalgic flavor, modern ingredients.
+            </p>
+            <div className="ingredients">
+              <h4>What Makes Us Different:</h4>
+              <ul>
+                <li>Premium Vietnamese Robusta Coffee</li>
+                <li>Oat Milk-Based Condensed Milk</li>
+                <li>Allulose Natural Sweetener</li>
+                <li>No Artificial Flavors or Preservatives</li>
+                <li>Lactose-Free & Vegan-Friendly</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ABOUT (teaser) */}
+      {/* ABOUT */}
       <section className="about" id="about">
         <div className="about-container">
           <h2>Our Story</h2>
           <div className="lotus">🪷</div>
-          <p>Born from a love of Vietnamese coffee culture and a desire to make it accessible for modern lifestyles.</p>
-          <p>Kamal is our ode to cà phê sữa đá—crafted with oat milk and allulose so you get everything you love, with nothing you don’t.</p>
-          <p><a className="secondary-btn" href="/story">Read the full story</a></p>
+          <p>
+            Kamal was born from a love of authentic Vietnamese coffee and a desire to make it
+            accessible to everyone. We keep the soul of cà phê sữa đá while innovating for today.
+          </p>
+          <p>
+            Like the lotus, we rise from tradition to create something beautiful and pure — with
+            ingredients that are better for you and the planet.
+          </p>
         </div>
       </section>
-{/* Email signup */}
-<EmailSignup />
+
+      {/* CONTACT */}
+      <section className="contact" id="contact">
+        <div className="contact-container">
+          <h2>Get In Touch</h2>
+          <p>Questions or wholesale? Drop us a note.</p>
+          <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+            <input type="text" placeholder="Your Name" required />
+            <input type="email" placeholder="Your Email" required />
+            <textarea placeholder="Your Message" required />
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
+      </section>
+
+      {/* EMAIL SIGNUP (soft, above footer) */}
+      <EmailSignup />
 
       {/* FOOTER */}
-      <footer>
-        <div className="footer-content">
-          <div className="social-links">
-            <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">📷</a>
-            <a href="https://www.tiktok.com/" target="_blank" rel="noreferrer">🎵</a>
-            <a href="https://www.youtube.com/" target="_blank" rel="noreferrer">▶️</a>
-          </div>
-          <p>© {new Date().getFullYear()} Kamal Coffee. All rights reserved.</p>
-          <p>Made with allulose 🍃</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
-  )
+  );
 }
