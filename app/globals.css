@@ -262,3 +262,16 @@ body::before {
 @media (max-width: 900px) {
   .product-card { grid-template-columns: 1fr; }
 }
+.quantity-selector {
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.qty-input {
+  width: 60px;
+  padding: 0.5rem;
+  border: 1px solid #e7e2dc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
