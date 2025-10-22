@@ -21,8 +21,13 @@ export default function EmailSignup() {
       if (!res) throw new Error('Network error');
       const data = (await res.json().catch(() => ({}))) as { message?: string };
 
-      if (res.ok) setMsg({ ok: true, text: data?.message ?? 'Thanks—check your inbox soon.' });
-      else setMsg({ ok: false, text: data?.message ?? 'Could not subscribe. Please try again.' });
+      if (res.ok)
+        setMsg({ ok: true, text: data?.message ?? 'Thanks—check your inbox soon.' });
+      else
+        setMsg({
+          ok: false,
+          text: data?.message ?? 'Could not subscribe. Please try again.',
+        });
     } catch {
       setMsg({ ok: false, text: 'Network error. Please try again later.' });
     } finally {
@@ -32,27 +37,25 @@ export default function EmailSignup() {
 
   return (
     <section
-      className="signup-wrap fade-in"
-      aria-labelledby="signup-title"
-      style={{
-        margin: '4rem auto',
-        maxWidth: 880,
-        padding: '2rem',
-        background: 'rgba(255,255,255,0.5)',
-        borderRadius: 16,
-        boxShadow: '0 10px 24px rgba(0,0,0,0.06)',
-      }}
+      id="email-signup"
+      className="relative isolate bg-gradient-to-b from-[#fdfaf7] via-[#fbf6f1] to-[#f6efe8] py-16 sm:py-24 text-center overflow-hidden"
     >
-      <div className="signup-inner" style={{ display: 'grid', gap: '1rem' }}>
-        <h2 id="signup-title" style={{ fontSize: '1.75rem', fontWeight: 800 }}>
-          Join the list
-        </h2>
+      {/* Optional background texture (add /public/texture.png if you want it) */}
+      <div className="absolute inset-0 -z-10 bg-[url('/texture.png')] opacity-10 mix-blend-soft-light"></div>
 
-        <p style={{ color: '#6B5538' }}>
-          Launch news & drops—just the good stuff.
+      <div className="mx-auto max-w-2xl px-6">
+        <h2 className="text-3xl sm:text-4xl font-semibold text-[#3c2e23] tracking-tight">
+          Stay in the loop.
+        </h2>
+        <p className="mt-4 text-base sm:text-lg text-[#6b5c4a] leading-relaxed">
+          Join the Kamal Coffee circle for product launches, behind-the-scenes stories,
+          and early access to new drops. No spam — just the good stuff.
         </p>
 
-        <form onSubmit={onSubmit} className="signup-form" style={{ display: 'flex', gap: '0.75rem' }}>
+        <form
+          onSubmit={onSubmit}
+          className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3"
+        >
           <input
             type="email"
             required
@@ -60,27 +63,12 @@ export default function EmailSignup() {
             aria-label="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={{
-              flex: 1,
-              padding: '0.9rem 1rem',
-              borderRadius: 12,
-              border: '1px solid #e7e2dc',
-              fontSize: '1rem',
-            }}
+            className="w-full sm:w-80 rounded-full border border-[#e7dfd6] bg-white/70 px-5 py-3 text-sm text-[#3c2e23] placeholder-[#9c8d7d] focus:outline-none focus:ring-2 focus:ring-[#c7a987] transition"
           />
           <button
             type="submit"
             disabled={loading}
-            style={{
-              padding: '0.9rem 1.25rem',
-              borderRadius: 12,
-              background: '#8B6F47',
-              color: '#fff',
-              fontWeight: 700,
-              border: 'none',
-              cursor: 'pointer',
-              opacity: loading ? 0.7 : 1,
-            }}
+            className="rounded-full bg-[#c7a987] px-8 py-3 font-medium text-white shadow-md hover:bg-[#b99673] active:scale-95 transition disabled:opacity-70"
           >
             {loading ? 'Joining…' : 'Join the list'}
           </button>
@@ -89,11 +77,9 @@ export default function EmailSignup() {
         {msg && (
           <p
             role="status"
-            style={{
-              marginTop: '0.5rem',
-              color: msg.ok ? '#2e7d32' : '#b00020',
-              fontWeight: 600,
-            }}
+            className={`mt-4 text-sm font-medium ${
+              msg.ok ? 'text-green-600' : 'text-red-500'
+            }`}
           >
             {msg.text}
           </p>
