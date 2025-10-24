@@ -1,184 +1,253 @@
 'use client';
 
-import { useEffect } from 'react';
+import Image from "next/image";
 
-// UI bits
-import AnnouncementBar from '@components/AnnouncementBar';
-import Footer from '@components/Footer';
-import EmailSignup from '@components/EmailSignup';
-
-export default function Home() {
-  // Smooth scrolling for on-page anchor links
-  useEffect(() => {
-    document
-      .querySelectorAll<HTMLAnchorElement>('a[href^="#"]')
-      .forEach((a) => {
-        a.addEventListener('click', (e) => {
-          const href = a.getAttribute('href') || '';
-          if (!href.startsWith('#')) return;
-          e.preventDefault();
-          const target = document.querySelector(href);
-          if (target) target.scrollIntoView({ behavior: 'smooth' });
-        });
-      });
-  }, []);
-
+// ————————————————————————————————
+// Promo Bar (optional)
+// ————————————————————————————————
+function PromoBar() {
   return (
-    <main>
-      {/* NAV */}
-      <nav>
-        <div className="nav-container">
-          <div className="logo">KAMAL</div>
-          <ul className="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#features">Benefits</a></li>
-            <li><a href="#product">Product</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          <a href="/shop" className="cta-button">Shop Now</a>
+    <div className="h-9 flex items-center justify-center bg-neutral-100 text-[13px] text-neutral-700">
+      Free shipping on US orders $45+
+    </div>
+  );
+}
+
+// ————————————————————————————————
+// Header (minimal, clean)
+// ————————————————————————————————
+function Header() {
+  return (
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-neutral-200">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" className="text-lg font-semibold tracking-tight">Kamal Coffee</a>
+        <nav className="hidden md:flex items-center gap-6 text-sm">
+          <a href="/shop" className="hover:underline underline-offset-4">Shop</a>
+          <a href="/subscribe" className="hover:underline underline-offset-4">Subscribe</a>
+          <a href="/story" className="hover:underline underline-offset-4">Our Story</a>
+          <a href="/brew" className="hover:underline underline-offset-4">Brew Tips</a>
+          <a href="/faq" className="hover:underline underline-offset-4">FAQ</a>
+        </nav>
+        <div className="flex items-center gap-4 text-sm">
+          <a href="https://www.instagram.com/kamal_coffee" className="hover:underline underline-offset-4">IG</a>
+          <a href="https://www.tiktok.com/@kamal_coffee" className="hover:underline underline-offset-4">TT</a>
+          <a href="/cart" className="rounded-full px-3 py-1 ring-1 ring-neutral-300 hover:bg-neutral-50">Cart</a>
         </div>
-      </nav>
+      </div>
+    </header>
+  );
+}
 
-      {/* Subtle announcement (dismissible) */}
-      <AnnouncementBar />
+// ————————————————————————————————
+// Hero — Single Product (Slate-style minimal)
+// ————————————————————————————————
+function HeroSingle() {
+  return (
+    <section className="relative isolate">
+      {/* soft neutral background with subtle radial */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(1200px_600px_at_70%_0%,rgba(0,0,0,0.06),transparent),linear-gradient(#F7F7F5,#F7F7F5)]" />
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-2 items-center gap-10 lg:gap-16">
+        {/* Copy */}
+        <div>
+          <p className="text-xs font-medium tracking-widest uppercase text-neutral-600">Vietnamese Iced Coffee</p>
+          <h1 className="mt-2 text-4xl/tight sm:text-5xl/tight lg:text-6xl/tight font-semibold tracking-tight text-neutral-950">
+            Bold. Silky. Unapologetically smooth.
+          </h1>
+          <p className="mt-4 max-w-xl text-neutral-600">
+            A modern take on cà phê sữa đá—deep robusta-forward character, kissed with sweetness, brewed cold and canned fresh.
+          </p>
 
-      {/* HERO */}
-      <section className="hero" id="home">
-        <div className="hero-container">
-          <div className="hero-content">
-            <div className="hero-tagline">AUTHENTIC • SMOOTH • ELEVATED</div>
-            <h1>Vietnamese Iced Coffee, Reimagined</h1>
-            <p className="hero-description">
-              Experience the rich, bold taste of traditional Vietnamese coffee with a modern twist.
-              Made with oat milk condensed milk and naturally sweetened with allulose.
-            </p>
-            <div className="hero-buttons">
-              <a className="primary-btn" href="/shop">Order Now</a>
-              <a className="secondary-btn" href="/story">Learn More</a>
-            </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href="/shop"
+              className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium text-white bg-neutral-900 hover:opacity-95 transition"
+            >
+              Shop now
+            </a>
+            <a
+              href="/subscribe"
+              className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium text-neutral-900 bg-white/70 ring-1 ring-black/10 hover:bg-white transition"
+            >
+              Subscribe & save
+            </a>
           </div>
-          <div className="hero-image floating-can tilt-can">
-            {/* Swap this image for your real can when ready */}
-            <img
-              src="/images/og.png"
-              width={400}
-              height={600}
+
+          {/* Quick facts */}
+          <div className="mt-8 grid grid-cols-3 gap-4 max-w-md text-xs text-neutral-700">
+            <div className="rounded-xl bg-white/60 ring-1 ring-black/5 p-3 text-center">Real coffee • No gums</div>
+            <div className="rounded-xl bg-white/60 ring-1 ring-black/5 p-3 text-center">Silky-smooth</div>
+            <div className="rounded-xl bg-white/60 ring-1 ring-black/5 p-3 text-center">Serve over ice</div>
+          </div>
+        </div>
+
+        {/* Single can visual */}
+        <div className="relative flex flex-col items-center">
+          <div
+            className="select-none"
+            style={{ filter: "drop-shadow(0 12px 30px rgba(0,0,0,.10)) drop-shadow(0 2px 6px rgba(0,0,0,.06))" }}
+          >
+            <Image
+              src="/images/can/vietnamese-iced-coffee.png"
               alt="Kamal Coffee — Vietnamese Iced Coffee"
-              style={{ width: 400, height: 'auto' }}
+              width={420}
+              height={900}
+              className="h-[clamp(260px,38vw,520px)] w-auto"
+              priority
             />
           </div>
+          {/* subtle tabletop shadow */}
+          <div className="pointer-events-none mt-8 h-10 w-[min(520px,90%)] rounded-[100%] bg-black/5 blur-2xl" />
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* FEATURES */}
-      <section className="features" id="features">
-        <h2 className="section-title">Why Kamal Coffee?</h2>
-        <div className="features-grid">
-          <div className="feature-card fade-in">
-            <div className="feature-icon">🌱</div>
-            <h3>Plant-Based Bliss</h3>
-            <p>
-              Our condensed milk is crafted with premium oat milk — creamy richness without dairy.
-              Perfect for a plant-based lifestyle.
-            </p>
-          </div>
-          <div className="feature-card fade-in">
-            <div className="feature-icon">🍃</div>
-            <h3>Naturally Sweetened</h3>
-            <p>
-              Sweetened with allulose for clean sweetness without the crash. Guilt-free indulgence.
-            </p>
-          </div>
-          <div className="feature-card fade-in">
-            <div className="feature-icon">☕</div>
-            <h3>Authentic Taste</h3>
-            <p>
-              Made with premium Vietnamese robusta beans, honoring tradition with modern craft.
-            </p>
-          </div>
-          <div className="feature-card fade-in">
-            <div className="feature-icon">⚡</div>
-            <h3>Ready to Enjoy</h3>
-            <p>No brewing. Grab, shake, and enjoy anywhere.</p>
-          </div>
-          <div className="feature-card fade-in">
-            <div className="feature-icon">💪</div>
-            <h3>Better Energy</h3>
-            <p>Bold coffee for steady focus without the jitters.</p>
-          </div>
-          <div className="feature-card fade-in">
-            <div className="feature-icon">🌍</div>
-            <h3>Sustainably Sourced</h3>
-            <p>We work directly with Vietnamese farmers for quality and fairness.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* PRODUCT */}
-      <section className="product" id="product">
-        <div className="product-container">
-          <div className="product-images">
-            <img src="/images/og.png" alt="Kamal Original" />
-            <img src="/images/og.png" alt="Kamal Original" />
-          </div>
-          <div className="product-info">
-            <h2>The Perfect Vietnamese Coffee Experience</h2>
-            <p>
-              Kamal brings you authentic Vietnamese iced coffee in a convenient, ready-to-drink
-              format. The perfect balance of bold coffee and creamy, clean sweetness.
-            </p>
-            <p>
-              Tradition meets nutrition: nostalgic flavor, modern ingredients.
-            </p>
-            <div className="ingredients">
-              <h4>What Makes Us Different:</h4>
-              <ul>
-                <li>Premium Vietnamese Robusta Coffee</li>
-                <li>Oat Milk-Based Condensed Milk</li>
-                <li>Allulose Natural Sweetener</li>
-                <li>No Artificial Flavors or Preservatives</li>
-                <li>Lactose-Free & Vegan-Friendly</li>
-              </ul>
+// ————————————————————————————————
+// Why Kamal (3-up value props)
+// ————————————————————————————————
+function WhyKamal() {
+  const items = [
+    { t: "Authentic Profile", d: "Built on the bold intensity Vietnamese coffee is known for—balanced, deep, and addictive." },
+    { t: "Clean Ingredients", d: "No gums or weird thickeners. Just coffee, milk options, and balanced sweetness." },
+    { t: "Cold-Brewed & Canned Fresh", d: "Brewed cold for low bitterness and sealed for peak flavor." },
+  ];
+  return (
+    <section className="bg-white py-20">
+      <div className="max-w-6xl mx-auto px-6 text-center">
+        <h2 className="text-3xl sm:text-4xl font-semibold text-neutral-900">Why Kamal?</h2>
+        <p className="mt-3 max-w-2xl mx-auto text-neutral-600">
+          A crisp, modern can with a soul from Saigon street cafés.
+        </p>
+        <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {items.map((x, i) => (
+            <div key={i} className="p-6 rounded-2xl bg-neutral-50 ring-1 ring-neutral-200 hover:ring-neutral-300 transition text-left">
+              <h3 className="font-medium text-lg text-neutral-900">{x.t}</h3>
+              <p className="mt-2 text-sm text-neutral-600">{x.d}</p>
             </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* ABOUT */}
-      <section className="about" id="about">
-        <div className="about-container">
-          <h2>Our Story</h2>
-          <div className="lotus">🪷</div>
-          <p>
-            Kamal was born from a love of authentic Vietnamese coffee and a desire to make it
-            accessible to everyone. We keep the soul of cà phê sữa đá while innovating for today.
-          </p>
-          <p>
-            Like the lotus, we rise from tradition to create something beautiful and pure — with
-            ingredients that are better for you and the planet.
-          </p>
+// ————————————————————————————————
+// How to serve (simple steps)
+// ————————————————————————————————
+function HowToServe() {
+  const steps = [
+    { t: "Chill", d: "Refrigerate can for at least 2 hours." },
+    { t: "Ice", d: "Fill a glass with big cubes (melts slower)." },
+    { t: "Pour", d: "Crack open and pour smooth over ice." },
+    { t: "Optional", d: "Adjust sweetness or add a splash of milk of choice." },
+  ];
+  return (
+    <section className="bg-[#F7F7F5] py-20">
+      <div className="max-w-6xl mx-auto px-6">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-900 text-center">Serve it perfectly</h2>
+        <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {steps.map((s, i) => (
+            <div key={i} className="p-5 rounded-2xl bg-white ring-1 ring-neutral-200">
+              <div className="text-sm font-medium text-neutral-900">{i + 1}. {s.t}</div>
+              <div className="mt-1 text-sm text-neutral-600">{s.d}</div>
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* CONTACT */}
-      <section className="contact" id="contact">
-        <div className="contact-container">
-          <h2>Get In Touch</h2>
-          <p>Questions or wholesale? Drop us a note.</p>
-          <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
-            <input type="text" placeholder="Your Name" required />
-            <input type="email" placeholder="Your Email" required />
-            <textarea placeholder="Your Message" required />
-            <button type="submit">Send Message</button>
-          </form>
+// ————————————————————————————————
+// Social proof (ratings + microquotes)
+// ————————————————————————————————
+function SocialProof() {
+  const quotes = [
+    { q: "As silky as café sữa đá from my favorite spot.", a: "— Amina" },
+    { q: "Sweetness dialed just right. Instant favorite.", a: "— Marco" },
+    { q: "Zero bitterness. Pour over ice and bliss.", a: "— Linh" },
+  ];
+  return (
+    <section className="bg-white py-20">
+      <div className="max-w-6xl mx-auto px-6 text-center">
+        <div className="flex items-center justify-center gap-2">
+          <div className="text-2xl">★★★★★</div>
+          <div className="text-sm text-neutral-600">4.9/5 • 1,200+ sips</div>
         </div>
-      </section>
+        <div className="mt-8 grid md:grid-cols-3 gap-6 text-left">
+          {quotes.map((c, i) => (
+            <blockquote key={i} className="p-6 rounded-2xl bg-neutral-50 ring-1 ring-neutral-200">
+              <p className="text-sm text-neutral-800">“{c.q}”</p>
+              <footer className="mt-3 text-xs text-neutral-600">{c.a}</footer>
+            </blockquote>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-      {/* EMAIL SIGNUP (soft, above footer) */}
-      <EmailSignup />
+// ————————————————————————————————
+// FAQ (lean)
+// ————————————————————————————————
+function FAQ() {
+  const faqs = [
+    { q: "Is it super sweet?", a: "Balanced. Vietnamese iced coffee has signature sweetness, but we keep it smooth—not cloying." },
+    { q: "Dairy-free option?", a: "Yes—plant-based variants are in the works. Join the list to be notified." },
+    { q: "How long does it last?", a: "Cans are shelf-stable. Best chilled and enjoyed within the date on the bottom." },
+  ];
+  return (
+    <section className="bg-[#F7F7F5] py-20">
+      <div className="max-w-4xl mx-auto px-6">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-900 text-center">FAQ</h2>
+        <div className="mt-10 space-y-4">
+          {faqs.map((f, i) => (
+            <details key={i} className="group rounded-2xl bg-white ring-1 ring-neutral-200 open:ring-neutral-300 transition">
+              <summary className="cursor-pointer list-none p-5 text-sm font-medium text-neutral-900 flex items-center justify-between">
+                {f.q}
+                <span className="text-neutral-400 group-open:rotate-45 transition">＋</span>
+              </summary>
+              <div className="px-5 pb-5 pt-1 text-sm text-neutral-600">{f.a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-      {/* FOOTER */}
+// ————————————————————————————————
+// Footer (simple)
+// ————————————————————————————————
+function Footer() {
+  return (
+    <footer className="bg-white border-t border-neutral-200 py-10">
+      <div className="max-w-6xl mx-auto px-6 text-center text-sm text-neutral-600">
+        <p>© {new Date().getFullYear()} Kamal Coffee. All rights reserved.</p>
+        <div className="mt-3 flex justify-center gap-4">
+          <a href="https://www.instagram.com/kamal_coffee" className="hover:text-neutral-900 transition">Instagram</a>
+          <a href="https://www.tiktok.com/@kamal_coffee" className="hover:text-neutral-900 transition">TikTok</a>
+          <a href="/contact" className="hover:text-neutral-900 transition">Contact</a>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ————————————————————————————————
+// Page
+// ————————————————————————————————
+export default function Page() {
+  return (
+    <main className="bg-white text-neutral-900">
+      <PromoBar />
+      <Header />
+      <HeroSingle />
+      <WhyKamal />
+      <HowToServe />
+      <SocialProof />
+      <FAQ />
       <Footer />
     </main>
   );
