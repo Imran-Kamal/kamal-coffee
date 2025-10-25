@@ -40,25 +40,28 @@ function Header() {
 }
 
 // ————————————————————————————————
-// Hero — restored TAN/BEIGE theme + image
+// Hero — Single Product (Kamal Coffee Hero Section)
 // ————————————————————————————————
 function HeroSingle() {
   return (
     <section className="relative isolate">
-      {/* Beige gradient background (matches your original look) */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(1200px_600px_at_75%_-10%,rgba(107,77,49,0.12),transparent),linear-gradient(#EFE7DA,#ECE3D6)]" />
-
+      {/* soft neutral tan background with gradient */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(1200px_600px_at_70%_0%,rgba(0,0,0,0.06),transparent),linear-gradient(#efe8de,#f6f2eb)]" />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-2 items-center gap-10 lg:gap-16">
-        {/* Copy */}
+        
+        {/* Copy Section */}
         <div>
-          <p className="text-xs font-medium tracking-widest uppercase text-neutral-700">Vietnamese Iced Coffee</p>
+          <p className="text-xs font-medium tracking-widest uppercase text-neutral-600">
+            Vietnamese Iced Coffee
+          </p>
           <h1 className="mt-2 text-4xl/tight sm:text-5xl/tight lg:text-6xl/tight font-semibold tracking-tight text-neutral-950">
             Bold. Silky. Unapologetically smooth.
           </h1>
-          <p className="mt-4 max-w-xl text-neutral-700">
+          <p className="mt-4 max-w-xl text-neutral-600">
             A modern take on cà phê sữa đá—deep robusta-forward character, kissed with sweetness, brewed cold and canned fresh.
           </p>
 
+          {/* Buttons */}
           <div className="mt-6 flex flex-wrap gap-3">
             <a
               href="/shop"
@@ -76,28 +79,42 @@ function HeroSingle() {
 
           {/* Quick facts */}
           <div className="mt-8 grid grid-cols-3 gap-4 max-w-md text-xs text-neutral-700">
-            <div className="rounded-xl bg-white/70 ring-1 ring-black/5 p-3 text-center">Real coffee • No gums</div>
-            <div className="rounded-xl bg-white/70 ring-1 ring-black/5 p-3 text-center">Silky-smooth</div>
-            <div className="rounded-xl bg-white/70 ring-1 ring-black/5 p-3 text-center">Serve over ice</div>
+            <div className="rounded-xl bg-white/60 ring-1 ring-black/5 p-3 text-center">
+              Real coffee • No gums
+            </div>
+            <div className="rounded-xl bg-white/60 ring-1 ring-black/5 p-3 text-center">
+              Silky-smooth
+            </div>
+            <div className="rounded-xl bg-white/60 ring-1 ring-black/5 p-3 text-center">
+              Serve over ice
+            </div>
           </div>
         </div>
 
-        {/* Can visual — ensure the file exists at /public/images/can/vietnamese-iced-coffee.png */}
+        {/* Can Visual — with glow and shadow */}
         <div className="relative flex flex-col items-center">
+          {/* soft glow behind can */}
+          <div className="pointer-events-none absolute -z-10 top-1/2 -translate-y-1/2 w-[min(620px,92vw)] h-[min(620px,92vw)] rounded-full bg-[radial-gradient(closest-side,rgba(0,0,0,0.10),transparent_70%)]" />
+
+          {/* can image */}
           <div
             className="select-none"
-            style={{ filter: "drop-shadow(0 12px 30px rgba(0,0,0,.12)) drop-shadow(0 2px 6px rgba(0,0,0,.06))" }}
+            style={{
+              filter:
+                "drop-shadow(0 12px 30px rgba(0,0,0,.12)) drop-shadow(0 2px 6px rgba(0,0,0,.06))",
+            }}
           >
             <Image
-  src="/images/kamal-coffee-simple-image-first-sketch-front-of-can.jpeg"
-  alt="Kamal Coffee — Vietnamese Iced Coffee"
-  width={480}
-  height={980}
-  className="h-[clamp(280px,40vw,560px)] w-auto select-none"
-  priority
-/>
-
+              src="/images/kamal-coffee-simple-image-first-sketch-front-of-can.jpeg"
+              alt="Kamal Coffee — Vietnamese Iced Coffee"
+              width={480}
+              height={980}
+              className="h-[clamp(280px,40vw,560px)] w-auto select-none"
+              priority
+              sizes="(min-width: 1024px) 480px, 60vw"
+            />
           </div>
+
           {/* tabletop shadow */}
           <div className="pointer-events-none mt-8 h-10 w-[min(560px,90%)] rounded-[100%] bg-black/10 blur-2xl" />
         </div>
@@ -105,6 +122,7 @@ function HeroSingle() {
     </section>
   );
 }
+
 
 // ————————————————————————————————
 // Why Kamal (3-up value props)
