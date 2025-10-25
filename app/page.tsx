@@ -114,7 +114,7 @@ function HeroSingle() {
               sizes="(min-width: 1024px) 480px, 60vw"
             />
           </div>
-
+ 
           {/* tabletop shadow */}
           <div className="pointer-events-none mt-8 h-10 w-[min(560px,90%)] rounded-[100%] bg-black/10 blur-2xl" />
         </div>
