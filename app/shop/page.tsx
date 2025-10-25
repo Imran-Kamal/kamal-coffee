@@ -31,8 +31,13 @@ export default function ShopPage() {
       qty
     );
     setAdded(true);
-    // brief confirmation
-    setTimeout(() => setAdded(false), 1200);
+    // brief toast
+    setTimeout(() => setAdded(false), 900);
+
+    // auto-open the MiniCart (SiteHeader listens for this)
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("kamal:open-cart"));
+    }
   };
 
   return (
